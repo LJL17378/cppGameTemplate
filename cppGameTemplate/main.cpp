@@ -9,6 +9,8 @@
 #include "scene2.h"
 
 Atlas coin_atlas; // 精灵图集
+Atlas fish1_atlas; // 精灵图集
+IMAGE img_bg;
 sceneManager scene_manager; // 场景管理器实例
 Camera camera; // 摄像机实例
 
@@ -17,12 +19,14 @@ Scene* scene2 = nullptr; // 另一个场景指针
 
 // 游戏配置
 #define FPS 60            // 目标帧率
-#define WINDOW_WIDTH 800  // 窗口宽度
-#define WINDOW_HEIGHT 600 // 窗口高度
+#define WINDOW_WIDTH 1024  // 窗口宽度
+#define WINDOW_HEIGHT 768 // 窗口高度
 
 void load_resources() {
 	// 加载资源
 	coin_atlas.load_from_file(_T("assets/image/coinAni2_0%d.png"), 10); // 加载10张金币图片
+    fish1_atlas.load_from_file(_T("assets/image/fish1_0%d.png"), 8);
+	loadimage(&img_bg, _T("assets/image/game_bg_2_hd.jpg")); // 加载背景图片
 }
 
 
@@ -66,7 +70,12 @@ int main() {
         scene_manager.on_draw(camera);
 
         // 批量绘制
-        FlushBatchDraw();
+        try {
+            FlushBatchDraw();
+        }
+        catch (...) {
+            std::cerr << "Exception occurred during FlushBatchDraw!" << std::endl;
+        }
 
         // 帧率控制
         DWORD frame_end_time = GetTickCount();

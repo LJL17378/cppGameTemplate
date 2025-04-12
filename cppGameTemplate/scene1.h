@@ -8,6 +8,8 @@
 #include <iostream>
 
 extern Atlas coin_atlas;
+extern Atlas fish1_atlas;
+extern IMAGE img_bg;
 
 extern sceneManager scene_manager;
 
@@ -20,14 +22,21 @@ public:
 		coin_animation.set_atlas(&coin_atlas);
 		coin_animation.set_interval(60);
 		coin_animation.set_loop(true);
+		fish1_animation.set_atlas(&fish1_atlas);
+		fish1_animation.set_interval(60);
+		fish1_animation.set_loop(true);
 	}
 	void on_update(int delta)
 	{
 		coin_animation.on_update(delta);
+		fish1_animation.on_update(delta);
+		angle += 1;
 	}
 	void on_draw(const Camera& camera) 
 	{
-		coin_animation.on_draw(100, 100);
+		putimage(0, 0, &img_bg);
+		coin_animation.on_draw(100, 100, angle);
+		fish1_animation.on_draw(200, 100, 0);
 	}
 	void on_input(const ExMessage& msg) 
 	{
@@ -41,4 +50,6 @@ public:
 	}
 private:
 	Animation coin_animation;
+	Animation fish1_animation;
+	double angle = 0;
 };

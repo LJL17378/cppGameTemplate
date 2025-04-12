@@ -65,9 +65,9 @@ public:
 		}
 	};
 
-	void on_draw(int x, int y) const
+	void on_draw(int x, int y ,double angle) const
 	{
-		putimage_alpha(x, y, atlas->get_image(idx_frame));
+		putimage_rotate_alpha(x, y, atlas->get_image(idx_frame),angle);
 	}
 private:
 	bool is_loop;
